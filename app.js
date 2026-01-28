@@ -18,7 +18,7 @@ function gameflash(btn) {
   btn.classList.add("flash");
   setTimeout(function () {
     btn.classList.remove("flash");
-  }, 100);
+  }, 400);
 }
 function userflash(btn) {
   btn.classList.add("userFlash");
@@ -57,7 +57,7 @@ function checkAns(idx) {
     document.querySelector("body").style.backgroundColor = "red"
     setTimeout(function(){
       document.querySelector("body").style.backgroundColor = "white";
-    },200);
+    },500);
     reset();
   }
 }
