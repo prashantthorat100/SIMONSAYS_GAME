@@ -2,16 +2,21 @@ let gameSeq = [];
 let userSeq = [];
 let started = false;
 let level = 0;
+let highestScore = 0;
+let gamesPlayed = 0;
 let h3 = document.querySelector("h3");
 let colorbtns = ["red", "green", "yellow", "blue"];
 let div = document.querySelectorAll(".btn");
 let h4 = document.querySelector('h4');
+
+// Hide score display initially
+h4.style.display = 'none';
 document.addEventListener("keypress", function () {
   if (started === false) {
     console.log("Game is started");
     started = true;
+    lvlup();
   }
-  lvlup();
 });
 
 function gameflash(btn) {
@@ -52,8 +57,22 @@ function checkAns(idx) {
       setTimeout(lvlup, 1000);
     }
   } else {
+    let currentScore = (level * 10) - 10;
+    gamesPlayed++;
+    
+    // Update highest score
+    if (currentScore > highestScore) {
+      highestScore = currentScore;
+    }
+    
     h3.innerText = `Game over! Press any key to start`;
-    h4.innerText = `Your score ${(level * 10 )- 10}`;
+    
+    // Show score display after first game
+    if (gamesPlayed >= 1) {
+      h4.style.display = 'block';
+      h4.innerText = `Highest Score: ${highestScore}`;
+    }
+    
     document.querySelector("body").style.backgroundColor = "red"
     setTimeout(function(){
       document.querySelector("body").style.backgroundColor = "white";
@@ -63,6 +82,11 @@ function checkAns(idx) {
 }
 
 function btnPress() {
+  // Only allow button clicks if game has started
+  if (!started) {
+    return;
+  }
+  
   let clickedBtn = this;
   userflash(clickedBtn);
 
